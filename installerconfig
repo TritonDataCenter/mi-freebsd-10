@@ -1,0 +1,71 @@
+# Setup Partitioning
+PARTITIONS="ada0"
+
+# Distribution files to install
+DISTRIBUTIONS="kernel.txz base.txz"
+
+################
+# Begin Installer Script
+################
+
+#!/bin/sh
+
+# Setup /etc/rc.conf
+cat > etc/rc.conf << RC_CONF
+fsck_y_enable="YES"
+dumpdev="AUTO"
+
+ifconfig_em0="DHCP"
+ifconfig_vtnet0="DHCP"
+
+sshd_enable="YES"
+
+ntpdate_enable="YES"
+RC_CONF
+
+# Set nameservers
+echo 'nameserver 8.8.8.8' >> /etc/resolv.conf
+echo 'nameserver 8.8.4.4' >> /etc/resolv.conf
+
+# Set Time Zone to UTC
+/bin/cp /usr/share/zoneinfo/UTC /etc/localtime
+/usr/bin/touch /etc/wall_cmos_clock
+/sbin/adjkerntz -a
+/usr/sbin/ntpdate -u 0.pool.ntp.org
+
+# Install packages
+pkg install -y bash vim-lite
+
+## Build date used for motd and product file
+BUILDDATE=$(date +%Y%m%d)
+RELEASE="10.0"
+DOC_URL="http://wiki.joyent.com/jpc2/Freebsd"
+
+# Create MOTD
+echo "Creating /etc/motd"
+mv /etc/motd /etc/motd-backup
+cat << MOTD > /etc/motd
+   __        .                   .
+ _|  |_      | .-. .  . .-. :--. |-
+|_    _|     ;|   ||  |(.-' |  | |
+  |__|   \`--'  \`-' \`;-| \`-' '  ' \`-'
+                   /  ;  Instance (FreeBSD $RELEASE $BUILDDATE)
+                   \`-'   $DOC_URL
+
+MOTD
+
+# Create product file
+echo "Creating /etc/product file"
+cat << PRODUCT > /etc/product
+Name: Joyent Instance
+Image: FreeBSD $RELEASE $BUILDDATE
+Documentation: $DOC_URL
+Description: FreeBSD $RELEASE 64-bit image with just essential packages \
+installed. Ideal for users who are comfortable with setting up their \
+own environment and tools.
+PRODUCT
+
+echo "End of installerconfig"
+
+# Shutdown/Poweroff
+poweroff
