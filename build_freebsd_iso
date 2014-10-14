@@ -8,24 +8,24 @@ MIRROR="ftp.freebsd.org"
 MIRROR_PATH="pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES"
 ISO="FreeBSD-10.0-RELEASE-amd64-bootonly.iso"
 ISO_DIR="freebsd-iso"
+ISO_MOUNT="/mnt/freebsd-iso"
+CUSTOM_ISO_LAYOUT="/var/tmp/custom-freebsd-iso"
+CUSTOM_ISO_TITLE="FREEBSD_INSTALL"
+CUSTOM_ISO_FILENAME="freebsd-10-custom.iso"
+INSTALLER_CFG="installerconfig"
 
 # Clean up ISO file if download is interupted
 trap "rm -rf $PWD/${ISO_DIR}/${ISO}" SIGHUP SIGINT SIGKILL SIGTERM
-
-ISO_MOUNT="/mnt/freebsd-iso"
-CUSTOM_ISO_LAYOUT="/mnt/custom-freebsd-iso"
-CUSTOM_ISO_TITLE="FREEBSD_INSTALL"
-CUSTOM_ISO_FILENAME="freebsd-10-custom.iso"
-
-INSTALLER_CFG="installerconfig"
+# Delete Previous custom layout
+trap "rm -rf $CUSTOM_ISO_LAYOUT" SIGHUP SIGINT SIGKILL SIGTERM
 
 function fetch_iso() {
-  if [ ! -d $ISO_DIR ]; then
+  if [[ ! -d $ISO_DIR ]]; then
     mkdir -p $ISO_DIR
   fi
   
   echo "==> Checking for local copy of $ISO..."
-  if [ -e $ISO_DIR/$ISO ]; then
+  if [[ -e $ISO_DIR/$ISO ]]; then
     echo "==> Found $ISO"
   else
       echo "==> Local copy not found."
@@ -40,32 +40,36 @@ function fetch_iso() {
 
 function create_layout() {
   echo "==> Creating custom ISO Layout"
-  if [ -d $CUSTOM_ISO_LAYOUT ]; then
+  if [[ -d $CUSTOM_ISO_LAYOUT ]]; then
       echo "==> Previous layout $CUSTOM_ISO_LAYOUT exists...deleting"
       rm -rf $CUSTOM_ISO_LAYOUT
   fi
   echo "==> Creating $CUSTOM_ISO_LAYOUT"
   mkdir -p $CUSTOM_ISO_LAYOUT
   
-  # Check if $MOUNT_POINT is already mounted
-  # This may happen if a previous build failed
-  if [ $(grep $ISO_MOUNT /proc/mounts) ]; then
-    echo "==> Unmounting $ISO_MOUNT from previous build..."
-      umount $ISO_MOUNT
-  fi
-  
-  echo "==> Mounting $ISO to $ISO_MOUNT "
-  if [ ! -d $ISO_MOUNT  ]; then
+  if [[ ! -d $ISO_MOUNT ]]; then
       echo "==> Creating $ISO_MOUNT ..."
       mkdir $ISO_MOUNT 
   fi
   
-  mount $ISO_DIR/$ISO $ISO_MOUNT -o loop
+  if [[ $(df | grep $ISO_MOUNT) ]]; then
+    echo "==> Unmounting previous $ISO_MOUNT..."
+    umount $ISO_MOUNT
+  fi
+  
+  echo "==> Mounting $ISO to $ISO_MOUNT"
+  mount -t cd9660 /dev/`mdconfig -f $ISO_DIR/$ISO` $ISO_MOUNT
+  
+  echo "==> Copying layout from $ISO_MOUNT to $CUSTOM_ISO_LAYOUT"
+  rsync -aq  $ISO_MOUNT/ $CUSTOM_ISO_LAYOUT
   
   echo "==> Copying guest tools to $CUSTOM_ISO_LAYOUT"
   
   echo "==> Copying $INSTALLER_CFG to $CUSTOM_ISO_LAYOUT"
-  cp $INSTALLER_CFG $DVD_LAYOUT/etc/
+  cp $INSTALLER_CFG $CUSTOM_ISO_LAYOUT/etc/
+  
+  echo "==> Unmounting $ISO_MOUNT"
+  umount $ISO_MOUNT
 }
 
 function create_newiso() {
@@ -78,5 +82,5 @@ function create_newiso() {
 
 echo "==> ISO Build Starting!"
 fetch_iso
-#create_layout
-#create_newiso
+create_layout
+create_newiso
