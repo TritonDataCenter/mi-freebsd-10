@@ -1,2 +1,4 @@
-freebsd-iso
+*.iso
 custom-freebsd-iso/
+freebsd-iso
+me-freebsd/
