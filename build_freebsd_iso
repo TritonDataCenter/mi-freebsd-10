@@ -90,6 +90,7 @@ function create_newiso() {
     -V "$CUSTOM_ISO_TITLE" \
     -p "Joyent" -b boot/cdboot \
     -o $CUSTOM_ISO_FILENAME $CUSTOM_ISO_LAYOUT
+  echo "==> Custom ISO now ready: $CUSTOM_ISO_FILENAME"
 }
 
 echo "==> ISO Build Starting!"
