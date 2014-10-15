@@ -63,7 +63,19 @@ function create_layout() {
   echo "==> Copying layout from $ISO_MOUNT to $CUSTOM_ISO_LAYOUT"
   rsync -aq  $ISO_MOUNT/ $CUSTOM_ISO_LAYOUT
   
-  echo "==> Copying guest tools to $CUSTOM_ISO_LAYOUT"
+  echo "==> Copying guest tools to $CUSTOM_ISO_LAYOUT:"
+  if [[ ! -d me-freebsd ]]; then
+    echo "===> Getting me-freebsd..."
+    git clone https://github.com/chorrell/me-freebsd.git
+    else
+    echo "===> Updating me-freebsd before copying to $CUSTOM_ISO_LAYOUT..."
+    cd me-freebsd
+    git pull
+    cd
+    echo "===> Copying me-freebsd to $CUSTOM_ISO_LAYOUT..."
+    cp -R ./me-freebsd/ $CUSTOM_ISO_LAYOUT/ 
+  fi
+  
   
   echo "==> Copying $INSTALLER_CFG to $CUSTOM_ISO_LAYOUT"
   cp $INSTALLER_CFG $CUSTOM_ISO_LAYOUT/etc/
