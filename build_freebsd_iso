@@ -71,7 +71,7 @@ function create_layout() {
     echo "===> Updating me-freebsd before copying to $CUSTOM_ISO_LAYOUT..."
     cd me-freebsd
     git pull
-    cd
+    cd ..
     echo "===> Copying me-freebsd to $CUSTOM_ISO_LAYOUT..."
     cp -R ./me-freebsd/ $CUSTOM_ISO_LAYOUT/ 
   fi
