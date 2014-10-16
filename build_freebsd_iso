@@ -58,7 +58,7 @@ function create_layout() {
   fi
   
   echo "==> Mounting $ISO to $ISO_MOUNT"
-  mount -t cd9660 /dev/`mdconfig -f $PWD/$ISO_DIR/$ISO` $ISO_MOUNT
+  mount -t cd9660 /dev/`mdconfig -f $ISO_DIR/$ISO` $ISO_MOUNT
   
   echo "==> Copying layout from $ISO_MOUNT to $CUSTOM_ISO_LAYOUT"
   rsync -aq  $ISO_MOUNT/ $CUSTOM_ISO_LAYOUT
