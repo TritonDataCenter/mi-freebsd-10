@@ -1,7 +1,38 @@
+# mi-freebsd-10
+
+This repo allows one to create a custom ISO with the necessary packages and
+tooling for deploying on SmartOS and Joyent Public Cloud.
+
+## Requirements
+
+This must be run on a FreeBSD machine or VirtualMachine.
+
+## Setup
+
+The following packages are required:
+
+```
+pkg install -y rsync cdrtools git
+```
+
+## Usage
+
+To build a custom ISO, run the `build_freebsd_iso` script:
 
 
-This must be run on a FreeBSD
+```
+./build_freebsd_iso
+```
 
-Install these first
+This will download an ISO, created a customized layout with installerconfig, then build the custom ISO.
 
-pkgin install -y rsync cdrtools git
+
+## Customizing
+You can modify the following if you'd prefer a different ISO, architexture, or FreeBSD mirror:
+
+```
+MIRROR="ftp.freebsd.org"
+MIRROR_PATH="pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES"
+ISO="FreeBSD-10.0-RELEASE-amd64-bootonly.iso"
+CUSTOM_ISO_FILENAME="freebsd-10-custom.iso"
+```
