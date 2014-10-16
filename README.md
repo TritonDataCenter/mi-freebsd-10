@@ -9,7 +9,7 @@ This must be run on a FreeBSD machine or VirtualMachine.
 
 ## Setup
 
-The following packages are required:
+Before using mi-freebsd-10, please install the following packages:
 
 ```
 pkg install -y rsync cdrtools git
