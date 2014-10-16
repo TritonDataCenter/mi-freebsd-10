@@ -34,7 +34,7 @@ echo 'nameserver 8.8.4.4' >> /etc/resolv.conf
 /usr/sbin/ntpdate -u 0.pool.ntp.org
 
 # Install packages
-pkg install -y bash vim-lite node
+pkg install -y bash vim-lite node npm
 
 ## Build date used for motd and product file
 BUILDDATE=$(date +%Y%m%d)
