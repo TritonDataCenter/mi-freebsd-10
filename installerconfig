@@ -1,5 +1,5 @@
 # Setup Partitioning
-PARTITIONS="vtblk0 { auto freebsd-ufs /, 2G freebsd-swap }"
+PARTITIONS="vtbd0 { auto freebsd-ufs /, 2G freebsd-swap }"
 
 # Distribution files to install
 DISTRIBUTIONS="kernel.txz base.txz ports.txz"
