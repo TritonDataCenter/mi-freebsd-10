@@ -2,7 +2,7 @@
 PARTITIONS="vtbd0"
 
 # Distribution files to install
-DISTRIBUTIONS="kernel.txz base.txz"
+DISTRIBUTIONS="kernel.txz base.txz ports.txz"
 
 ################
 # Begin Installer Script
