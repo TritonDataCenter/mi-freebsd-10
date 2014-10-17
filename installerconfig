@@ -11,7 +11,7 @@ DISTRIBUTIONS="kernel.txz base.txz"
 #!/bin/sh
 
 # Setup /etc/rc.conf
-cat > etc/rc.conf << RC_CONF
+cat > /etc/rc.conf << RC_CONF
 fsck_y_enable="YES"
 dumpdev="AUTO"
 
