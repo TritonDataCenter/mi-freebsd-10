@@ -1,9 +1,8 @@
-PARTITIONS="vtbd0 { auto freebsd-ufs /, 2G freebsd-swap }"
+PARTITIONS=vtbd0
 DISTRIBUTIONS="kernel.txz base.txz ports.txz"
 BSDINSTALL_LOG=/var/log/bsdinstall_log
 
 #!/bin/sh
-
 echo "*** Running installerconfig ***"
 
 # Setup /etc/rc.conf
