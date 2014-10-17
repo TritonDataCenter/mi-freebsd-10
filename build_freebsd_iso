@@ -13,6 +13,7 @@ CUSTOM_ISO_LAYOUT="/data/custom-freebsd-iso"
 CUSTOM_ISO_TITLE="FREEBSD_INSTALL"
 CUSTOM_ISO_FILENAME="freebsd-10-custom.iso"
 INSTALLER_CFG="installerconfig"
+RC_CONF=rc.conf
 
 # Clean up ISO file if download is interupted
 trap "rm -rf $PWD/${ISO_DIR}/${ISO}" SIGHUP SIGINT SIGKILL SIGTERM
@@ -78,7 +79,10 @@ function create_layout() {
   
   
   echo "==> Copying $INSTALLER_CFG to $CUSTOM_ISO_LAYOUT"
-  #cp $INSTALLER_CFG $CUSTOM_ISO_LAYOUT/etc/
+  cp $INSTALLER_CFG $CUSTOM_ISO_LAYOUT/etc/
+  
+  echo "==> Copying rc.conf"
+  cp $RC_CONF $CUSTOM_ISO_LAYOUT/etc/
   
   echo "==> Unmounting $ISO_MOUNT"
   umount $ISO_MOUNT
