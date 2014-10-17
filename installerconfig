@@ -1,14 +1,10 @@
-# Setup Partitioning
 PARTITIONS="vtbd0 { auto freebsd-ufs /, 2G freebsd-swap }"
-
-# Distribution files to install
 DISTRIBUTIONS="kernel.txz base.txz ports.txz"
-
-################
-# Begin Installer Script
-################
+BSDINSTALL_LOG=/var/log/bsdinstall_log
 
 #!/bin/sh
+
+echo "*** Running installerconfig ***"
 
 # Setup /etc/rc.conf
 cat > /etc/rc.conf << RC_CONF
