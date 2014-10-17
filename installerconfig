@@ -1,5 +1,5 @@
 # Setup Partitioning
-PARTITIONS="ada0"
+PARTITIONS="sd0"
 
 # Distribution files to install
 DISTRIBUTIONS="kernel.txz base.txz"
