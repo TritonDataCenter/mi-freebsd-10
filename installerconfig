@@ -1,6 +1,3 @@
-BSDINSTALL_LOG=/var/log/bsdinstall_log
-BSDINSTALL_TMPETC=/var/tmp/bsdinstall_etc
-BSDINSTALL_TMPBOOT=/var/tmp/bsdinstall_boot
 PARTITIONS=vtbd0
 DISTRIBUTIONS="kernel.txz base.txz ports.txz"
 
