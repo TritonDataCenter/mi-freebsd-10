@@ -16,6 +16,7 @@ ifconfig_vtnet0="DHCP"
 sshd_enable="YES"
 
 ntpdate_enable="YES"
+ntpdate_hosts="0.pool.ntp.org"
 RC_CONF
 
 # Set nameservers
@@ -26,7 +27,6 @@ echo 'nameserver 8.8.4.4' >> /etc/resolv.conf
 /bin/cp /usr/share/zoneinfo/UTC /etc/localtime
 /usr/bin/touch /etc/wall_cmos_clock
 /sbin/adjkerntz -a
-/usr/sbin/ntpdate -u 0.pool.ntp.org
 
 # Install packages
 env ASSUME_ALWAYS_YES=YES pkg bootstrap
