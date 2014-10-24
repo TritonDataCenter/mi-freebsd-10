@@ -77,7 +77,7 @@ function create_layout() {
     cp -R ./me-freebsd/ $CUSTOM_ISO_LAYOUT/ 
   fi
   echo "==> Enable console logging in /etc/syslog.conf"
-  sed s/#console.info/console.info/ -i $CUSTOM_ISO_LAYOUT/etc/syslog.conf
+  sed -i '.bak' -e 's/#console.info/console.info/g' $CUSTOM_ISO_LAYOUT/etc/syslog.conf
   
   echo "==> Copying $INSTALLER_CFG to $CUSTOM_ISO_LAYOUT"
   cp $INSTALLER_CFG $CUSTOM_ISO_LAYOUT/etc/
