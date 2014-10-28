@@ -32,6 +32,9 @@ echo 'nameserver 8.8.4.4' >> /etc/resolv.conf
 env ASSUME_ALWAYS_YES=YES pkg bootstrap
 pkg install -y bash curl node npm ntp vim-lite wget
 
+# Install me-freebsd
+cp -R /usr/freebsd-dist/me-freebsd/ /
+
 ## Build date used for motd and product file
 BUILDDATE=$(date +%Y%m%d)
 RELEASE="10.0"

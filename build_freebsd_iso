@@ -73,8 +73,8 @@ function create_layout() {
     cd me-freebsd
     git pull
     cd ..
-    echo "===> Copying me-freebsd to $CUSTOM_ISO_LAYOUT..."
-    cp -R ./me-freebsd/ $CUSTOM_ISO_LAYOUT/ 
+    echo "===> Copying me-freebsd to $CUSTOM_ISO_LAYOUT/usr/freebsd-dist..."
+    cp -R ./me-freebsd/ $CUSTOM_ISO_LAYOUT/usr/freebsd-dist/me-freebsd/
   fi
   #echo "==> Enable console logging in /etc/syslog.conf"
   #touch $CUSTOM_ISO_LAYOUT/var/log/console.log
