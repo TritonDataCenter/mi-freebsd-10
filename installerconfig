@@ -34,7 +34,7 @@ echo 'nameserver 8.8.4.4' >> /etc/resolv.conf
 
 # Install packages
 env ASSUME_ALWAYS_YES=YES pkg bootstrap
-pkg install -y bash curl node npm ntp vim-lite wget
+env ASSUME_ALWAYS_YES=YES pkg install -y bash curl node npm ntp vim-lite wget
 
 # Install me-freebsd
 cp -R /usr/freebsd-dist/me-freebsd/ /
