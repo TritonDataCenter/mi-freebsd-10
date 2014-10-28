@@ -5,6 +5,9 @@ DISTRIBUTIONS="kernel.txz base.txz"
 #!/bin/sh
 echo "*** Running installerconfig ***"
 
+# Enable serial and internal consoles
+echo "-Dh" > /boot.config
+
 # Setup /etc/rc.conf
 cat > /etc/rc.conf << RC_CONF
 fsck_y_enable="YES"
