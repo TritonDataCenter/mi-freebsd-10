@@ -86,6 +86,9 @@ function create_layout() {
   echo "==> Copying rc.conf"
   cp $RC_CONF $CUSTOM_ISO_LAYOUT/etc/
   
+  echo "==> Enable serial and internal consoles"
+  echo "-Dh" > $CUSTOM_ISO_LAYOUT/boot.config
+  
   echo "==> Unmounting $ISO_MOUNT"
   umount $ISO_MOUNT
 }
