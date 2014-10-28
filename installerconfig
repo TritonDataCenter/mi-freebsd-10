@@ -14,9 +14,9 @@ ifconfig_em0="DHCP"
 ifconfig_vtnet0="DHCP"
 
 sshd_enable="YES"
+ntpd_enable="YES"
+ntpd_sync_on_start="YES"
 
-ntpdate_enable="YES"
-ntpdate_hosts="0.pool.ntp.org"
 RC_CONF
 
 # Set nameservers
