@@ -1,15 +1,17 @@
 PARTITIONS=vtbd0
 DISTRIBUTIONS="kernel.txz base.txz"
 
-
 #!/bin/sh
-echo "*** Running installerconfig ***"
+echo "==> Running installerconfig"
 
 # Enable serial and internal consoles
+echo "==> Enabling serial and internal consoles"
 echo "-Dh" > /boot.config
 echo "cuaa0   "/usr/libexec/getty std.38400"  xterm   on  secure" >> /etc/ttys
+echo ""
 
 # Setup /etc/rc.conf
+echo "==> Setting up networking"
 cat > /etc/rc.conf << RC_CONF
 fsck_y_enable="YES"
 dumpdev="AUTO"
@@ -22,23 +24,51 @@ ntpd_enable="YES"
 ntpd_sync_on_start="YES"
 
 RC_CONF
+echo ""
 
 # Set nameservers
+echo "==> Setting up name servers"
 echo 'nameserver 8.8.8.8' >> /etc/resolv.conf
 echo 'nameserver 8.8.4.4' >> /etc/resolv.conf
+echo ""
 
+echo "==> Contents of /etc/resolv.conf"
+cat /etc/resolv.conf
+echo ""
+
+echo "==> Starting netif"
 service netif start
+echo ""
+
+echo "==> Getting output of ifconfig"
+ifconfig -a
+echo ""
+sleep 10
+
+echo "==> Testing host lookup of pkg.FreeBSD.org"
+host pkg.FreeBSD.org
+echo ""
 
 # Set Time Zone to UTC
+echo "==> Setting Time Zone to UTC"
 /bin/cp /usr/share/zoneinfo/UTC /etc/localtime
 /usr/bin/touch /etc/wall_cmos_clock
 /sbin/adjkerntz -a
+echo ""
 
 # Install packages
+echo "==> Bootstrapping pkg"
 env ASSUME_ALWAYS_YES=YES pkg bootstrap
+echo ""
+
+echo "==> Installing packages"
 env ASSUME_ALWAYS_YES=YES pkg install -y bash curl node npm ntp vim-lite wget
+echo ""
 
 # Install me-freebsd
+echo "==> Contents of /usr/freebsd-dist/:"
+ls /usr/freebsd-dist/
+echo ""
 cp -R /usr/freebsd-dist/me-freebsd/ /
 
 ## Build date used for motd and product file
@@ -71,6 +101,7 @@ own environment and tools.
 PRODUCT
 
 echo "End of installerconfig"
+sleep 10
 
 # Shutdown/Poweroff
 poweroff
