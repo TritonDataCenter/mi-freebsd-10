@@ -25,6 +25,7 @@ ntpd_sync_on_start="YES"
 
 RC_CONF
 echo ""
+sleep 10
 
 echo "==> Contents of /etc/resolv.conf"
 cat /etc/resolv.conf
@@ -41,6 +42,11 @@ ifconfig -a
 echo ""
 sleep 10
 
+echo "==> Restarting netif"
+service netif restart
+echo ""
+sleep 10
+
 echo "==> Testing host lookup of pkg.FreeBSD.org"
 host pkg.FreeBSD.org
 echo ""
@@ -52,6 +58,7 @@ echo "==> Setting Time Zone to UTC"
 /usr/bin/touch /etc/wall_cmos_clock
 /sbin/adjkerntz -a
 echo ""
+sleep 10
 
 # Install packages
 echo "==> Bootstrapping pkg"
@@ -62,6 +69,7 @@ sleep 10
 echo "==> Installing packages"
 env ASSUME_ALWAYS_YES=YES pkg install -y bash curl node npm ntp vim-lite wget
 echo ""
+sleep 10
 
 # Install me-freebsd
 echo "==> Contents of /usr/freebsd-dist/:"
