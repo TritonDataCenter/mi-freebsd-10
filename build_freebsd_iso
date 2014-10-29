@@ -14,6 +14,7 @@ CUSTOM_ISO_TITLE="FREEBSD_INSTALL"
 CUSTOM_ISO_FILENAME="freebsd-10-custom.iso"
 INSTALLER_CFG="installerconfig"
 RC_CONF=rc.conf
+RESOLV=resolv.conf
 
 # Clean up ISO file if download is interupted
 trap "rm -rf $PWD/${ISO_DIR}/${ISO}" SIGHUP SIGINT SIGKILL SIGTERM
@@ -83,8 +84,11 @@ function create_layout() {
   echo "==> Copying $INSTALLER_CFG to $CUSTOM_ISO_LAYOUT"
   cp $INSTALLER_CFG $CUSTOM_ISO_LAYOUT/etc/
   
-  echo "==> Copying rc.conf"
+  echo "==> Copying $RC_CONF"
   cp $RC_CONF $CUSTOM_ISO_LAYOUT/etc/
+  
+  echo "==> Copying $RESOLV"
+  cp $RESOLV $CUSTOM_ISO_LAYOUT/etc/
   
   echo "==> Enable serial and internal consoles"
   echo "-Dh" > $CUSTOM_ISO_LAYOUT/boot.config
