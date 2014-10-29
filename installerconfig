@@ -10,14 +10,18 @@ echo "-Dh" > /boot.config
 echo "cuaa0   "/usr/libexec/getty std.38400"  xterm   on  secure" >> /etc/ttys
 echo ""
 
-# Setup /etc/rc.conf
-echo "==> Setting up networking"
+echo "==> Contents of rc.conf"
+cat /etc/rc.conf
+echo""
+sleep 5
+
+echo "==> Setting up rc.conf"
 cat > /etc/rc.conf << RC_CONF
 fsck_y_enable="YES"
 dumpdev="AUTO"
 
-ifconfig_em0="DHCP"
 ifconfig_vtnet0="DHCP"
+ifconfig_vtnet1="DHCP"
 
 sshd_enable="YES"
 ntpd_enable="YES"
@@ -26,6 +30,11 @@ ntpd_sync_on_start="YES"
 RC_CONF
 echo ""
 sleep 10
+
+echo "==> Contents of rc.conf"
+cat /etc/rc.conf
+echo""
+sleep 5
 
 echo "==> Contents of /etc/resolv.conf"
 cat /etc/resolv.conf
