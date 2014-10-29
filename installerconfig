@@ -1,5 +1,5 @@
 PARTITIONS=vtbd0
-DISTRIBUTIONS="kernel.txz base.txz"
+DISTRIBUTIONS="kernel.txz base.txz ports.txz"
 
 
 #!/bin/sh
