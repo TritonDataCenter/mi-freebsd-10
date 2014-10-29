@@ -36,11 +36,6 @@ cat /etc/rc.conf
 echo""
 sleep 5
 
-echo "==> Contents of /etc/resolv.conf"
-cat /etc/resolv.conf
-echo ""
-sleep 10
-
 echo "==> Starting netif"
 service netif start
 echo ""

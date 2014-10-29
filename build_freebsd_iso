@@ -87,10 +87,6 @@ function create_layout() {
   echo "==> Copying $RC_CONF"
   cp $RC_CONF $CUSTOM_ISO_LAYOUT/etc/
   
-  #echo "==> Copying $RESOLV"
-  #rm $CUSTOM_ISO_LAYOUT/etc/resolv.conf
-  #cp $RESOLV $CUSTOM_ISO_LAYOUT/etc/
-  
   echo "==> Enable serial and internal consoles"
   echo "-Dh" > $CUSTOM_ISO_LAYOUT/boot.config
   echo "cuaa0   "/usr/libexec/getty std.38400"  xterm   on  secure" >> $CUSTOM_ISO_LAYOUT/etc/ttys
