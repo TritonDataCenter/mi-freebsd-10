@@ -1,6 +1,14 @@
 PARTITIONS=vtbd0
 DISTRIBUTIONS="kernel.txz base.txz"
 
+echo $BSDINSTALL_DISTDIR
+ls -AlFh $BSDINSTALL_DISTDIR
+sleep 5
+
+echo $BSDINSTALL_CHROOT
+ls -AlFh $BSDINSTALL_CHROOT
+sleep 5
+
 #!/bin/sh
 echo "==> Running installerconfig"
 
@@ -9,6 +17,7 @@ echo "==> Enabling serial and internal consoles"
 echo "-Dh" > /boot.config
 echo "cuaa0   "/usr/libexec/getty std.38400"  xterm   on  secure" >> /etc/ttys
 echo ""
+sleep 5
 
 echo "==> Contents of rc.conf"
 cat /etc/rc.conf
@@ -42,12 +51,17 @@ echo ""
 sleep 10
 
 echo "==> Getting output of ifconfig"
-ifconfig -a
+ifconfig
 echo ""
 sleep 10
 
 echo "==> Restarting netif"
 service netif restart
+echo ""
+sleep 10
+
+echo "==> Getting output of ifconfig"
+ifconfig
 echo ""
 sleep 10
 
