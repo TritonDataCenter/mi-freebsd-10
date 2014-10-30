@@ -81,6 +81,7 @@ function create_layout() {
   #touch $CUSTOM_ISO_LAYOUT/var/log/console.log
   #sed -i '.bak' -e 's/#console.info/console.info/g' $CUSTOM_ISO_LAYOUT/etc/syslog.conf
   
+  sleep 10
   echo "==> Copying $INSTALLER_CFG to $CUSTOM_ISO_LAYOUT"
   cp $INSTALLER_CFG $CUSTOM_ISO_LAYOUT/etc/
   
