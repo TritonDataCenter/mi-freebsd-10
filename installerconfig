@@ -59,10 +59,10 @@ echo ""
 sleep 5
 
 # Install me-freebsd
-echo "==> Contents of /usr/freebsd-dist/:"
-ls /usr/freebsd-dist/
-echo ""
-cp -R /usr/freebsd-dist/me-freebsd/ /
+#echo "==> Contents of /usr/freebsd-dist/:"
+#ls /usr/freebsd-dist/
+#echo ""
+#cp -R /usr/freebsd-dist/me-freebsd/ /
 
 ## Build date used for motd and product file
 BUILDDATE=$(date +%Y%m%d)
