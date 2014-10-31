@@ -87,9 +87,7 @@ function create_layout() {
   
   sleep 10
   echo "==> Getting pkg.txz"
-  cd $CUSTOM_ISO_LAYOUT/usr/freebsd-dist/
-  curl -O http://pkg.freebsd.org/freebsd:10:x86:64/latest/Latest/pkg.txz
-  cd ..
+  curl -o $CUSTOM_ISO_LAYOUT/usr/freebsd-dist/pkg.txz http://pkg.freebsd.org/freebsd:10:x86:64/latest/Latest/pkg.txz
   
   echo "==> Copying $RC_CONF"
   cp $RC_CONF $CUSTOM_ISO_LAYOUT/etc/
