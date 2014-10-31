@@ -32,7 +32,7 @@ dhclient vtnet0
 sleep 5
 
 echo "== Starting netif"
-service netif start
+service netif restart
 sleep 5
 
 echo "== Getting ifconfig info"
