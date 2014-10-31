@@ -55,6 +55,10 @@ ifconfig
 echo ""
 sleep 10
 
+echo "== Starting dhclient for vtnet0"
+dhclient vtnet0
+sleep 10
+
 echo "==> Restarting netif"
 service netif restart
 echo ""
