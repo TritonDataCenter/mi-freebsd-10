@@ -1,14 +1,6 @@
 PARTITIONS=vtbd0
 DISTRIBUTIONS="kernel.txz base.txz"
 
-echo "Contents of $BSDINSTALL_DISTDIR"
-ls -AlFh $BSDINSTALL_DISTDIR
-sleep 5
-
-echo "Contents of $BSDINSTALL_CHROOT"
-ls -AlFh $BSDINSTALL_CHROOT
-sleep 5
-
 #!/bin/sh
 echo "==> Running installerconfig"
 
