@@ -83,9 +83,6 @@ function create_layout() {
   echo "-Dh" > $CUSTOM_ISO_LAYOUT/boot.config
   echo "cuaa0   "/usr/libexec/getty std.38400"  xterm   on  secure" >> $CUSTOM_ISO_LAYOUT/etc/ttys
   
-  echo "==> Disable network so that IP is available for installer"
-  echo "service netif stop" >> $CUSTOM_ISO_LAYOUT/etc/rc.conf
-  
   echo "==> Unmounting $ISO_MOUNT"
   umount $ISO_MOUNT
 }
