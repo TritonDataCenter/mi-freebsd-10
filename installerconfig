@@ -44,6 +44,10 @@ echo "== Starting dhclient for vtnet0"
 dhclient vtnet0
 sleep 5
 
+echo "== Starting dhclient for em0"
+dhclient em0
+sleep 5
+
 echo "==> Getting output of ifconfig"
 ifconfig
 echo ""
