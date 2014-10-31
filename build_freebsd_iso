@@ -13,7 +13,6 @@ CUSTOM_ISO_LAYOUT="/data/custom-freebsd-iso"
 CUSTOM_ISO_TITLE="FREEBSD_INSTALL"
 CUSTOM_ISO_FILENAME="freebsd-10-custom.iso"
 INSTALLER_CFG="installerconfig"
-RC_CONF=rc.conf
 
 # Clean up ISO file if download is interupted
 trap "rm -rf $PWD/${ISO_DIR}/${ISO}" SIGHUP SIGINT SIGKILL SIGTERM
@@ -76,9 +75,6 @@ function create_layout() {
     echo "===> Copying me-freebsd to $CUSTOM_ISO_LAYOUT/usr/freebsd-dist..."
     cp -R ./me-freebsd/ $CUSTOM_ISO_LAYOUT/usr/freebsd-dist/me-freebsd/
   fi
-  #echo "==> Enable console logging in /etc/syslog.conf"
-  #touch $CUSTOM_ISO_LAYOUT/var/log/console.log
-  #sed -i '.bak' -e 's/#console.info/console.info/g' $CUSTOM_ISO_LAYOUT/etc/syslog.conf
   
   sleep 10
   echo "==> Copying $INSTALLER_CFG to $CUSTOM_ISO_LAYOUT"
@@ -88,9 +84,7 @@ function create_layout() {
   echo "==> Getting pkg.txz"
   curl -o $CUSTOM_ISO_LAYOUT/usr/freebsd-dist/pkg.txz http://pkg.freebsd.org/freebsd:10:x86:64/latest/Latest/pkg.txz
   
-  echo "==> Copying $RC_CONF"
-  cp $RC_CONF $CUSTOM_ISO_LAYOUT/etc/
-  
+  sleep 10
   echo "==> Enable serial and internal consoles"
   echo "-Dh" > $CUSTOM_ISO_LAYOUT/boot.config
   echo "cuaa0   "/usr/libexec/getty std.38400"  xterm   on  secure" >> $CUSTOM_ISO_LAYOUT/etc/ttys
