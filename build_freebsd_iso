@@ -81,10 +81,6 @@ function create_layout() {
   cp $INSTALLER_CFG $CUSTOM_ISO_LAYOUT/etc/
   
   sleep 10
-  echo "==> Getting pkg.txz"
-  curl -o $CUSTOM_ISO_LAYOUT/usr/freebsd-dist/pkg.txz http://pkg.freebsd.org/freebsd:10:x86:64/latest/Latest/pkg.txz
-  
-  sleep 10
   echo "==> Enable serial and internal consoles"
   echo "-Dh" > $CUSTOM_ISO_LAYOUT/boot.config
   echo "cuaa0   "/usr/libexec/getty std.38400"  xterm   on  secure" >> $CUSTOM_ISO_LAYOUT/etc/ttys
