@@ -87,6 +87,13 @@ function create_layout() {
   echo "ifconfig_vtnet0=\"DHCP\"" >> $CUSTOM_ISO_LAYOUT/etc/rc.conf
   echo "ifconfig_vtnet1=\"DHCP\"" >> $CUSTOM_ISO_LAYOUT/etc/rc.conf
   
+  echo "==> Remove resolv.conf symlink"
+  rm $CUSTOM_ISO_LAYOUT/etc/resolv.conf
+
+  echo "==> Set resolvers in the blank VM"
+  echo "nameserver 8.8.8.8" >> $CUSTOM_ISO_LAYOUT/etc/resolv.conf
+  echo "nameserver 8.8.4.4" >> $CUSTOM_ISO_LAYOUT/etc/resolv.conf
+  
   echo "==> Unmounting $ISO_MOUNT"
   umount $ISO_MOUNT
 }
