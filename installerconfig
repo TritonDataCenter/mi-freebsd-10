@@ -1,5 +1,5 @@
 PARTITIONS=vtbd0
-DISTRIBUTIONS="kernel.txz base.txz"
+DISTRIBUTIONS="kernel.txz base.txz pkg.txz"
 
 echo $BSDINSTALL_DISTDIR
 ls -AlFh $BSDINSTALL_DISTDIR
