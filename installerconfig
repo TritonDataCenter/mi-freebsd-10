@@ -31,6 +31,10 @@ echo "== Starting dhclient for vtnet0"
 dhclient vtnet0
 sleep 5
 
+echo "== Starting netif"
+service netif start
+sleep 5
+
 echo "== Getting ifconfig info"
 ifconfig
 sleep 5
