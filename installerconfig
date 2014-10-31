@@ -39,9 +39,9 @@ echo "==> Setting Time Zone to UTC"
 echo ""
 sleep 5
 
-# Install packages
 echo "==> Installing packages"
-env ASSUME_ALWAYS_YES=YES pkg install -y bash curl node npm ntp vim-lite wget
+env ASSUME_ALWAYS_YES=YES pkg install -y bash
+#  curl node npm ntp vim-lite wget
 echo ""
 sleep 5
 
