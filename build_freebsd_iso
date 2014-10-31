@@ -87,7 +87,6 @@ function create_layout() {
   
   sleep 10
   echo "==> Getting pkg.txz"
-  http://pkg.freebsd.org/freebsd:10:x86:64/latest/Latest/pkg.txz
   cd $CUSTOM_ISO_LAYOUT/usr/freebsd-dist/
   curl -O http://pkg.freebsd.org/freebsd:10:x86:64/latest/Latest/pkg.txz
   cd ..
