@@ -14,7 +14,6 @@ CUSTOM_ISO_TITLE="FREEBSD_INSTALL"
 CUSTOM_ISO_FILENAME="freebsd-10-custom.iso"
 INSTALLER_CFG="installerconfig"
 RC_CONF=rc.conf
-RESOLV=resolv.conf
 
 # Clean up ISO file if download is interupted
 trap "rm -rf $PWD/${ISO_DIR}/${ISO}" SIGHUP SIGINT SIGKILL SIGTERM
