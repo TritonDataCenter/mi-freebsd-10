@@ -83,8 +83,9 @@ function create_layout() {
   echo "-Dh" > $CUSTOM_ISO_LAYOUT/boot.config
   echo "cuaa0   \"/usr/libexec/getty std.38400\"  xterm   on  secure" >> $CUSTOM_ISO_LAYOUT/etc/ttys
   
-  echo "==> Get ifconfig info from blank VM"
-  echo "ifconfig" >> $CUSTOM_ISO_LAYOUT/etc/rc.conf
+  echo "==> Get network up automatically in the blank VM"
+  echo "ifconfig_vtnet0=\"DHCP\"" >> $CUSTOM_ISO_LAYOUT/etc/rc.conf
+  echo "ifconfig_vtnet1=\"DHCP\"" >> $CUSTOM_ISO_LAYOUT/etc/rc.conf
   
   echo "==> Unmounting $ISO_MOUNT"
   umount $ISO_MOUNT
