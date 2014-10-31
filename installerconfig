@@ -79,11 +79,6 @@ echo ""
 sleep 10
 
 # Install packages
-echo "==> Bootstrapping pkg"
-env ASSUME_ALWAYS_YES=YES pkg bootstrap
-echo ""
-sleep 10
-
 echo "==> Installing packages"
 env ASSUME_ALWAYS_YES=YES pkg install -y bash curl node npm ntp vim-lite wget
 echo ""
