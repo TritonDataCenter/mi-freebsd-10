@@ -53,11 +53,6 @@ ifconfig
 echo ""
 sleep 10
 
-echo "==> Getting output of ifconfig"
-ifconfig
-echo ""
-sleep 10
-
 echo "==> Testing host lookup of pkg.FreeBSD.org"
 host pkg.FreeBSD.org
 echo ""
