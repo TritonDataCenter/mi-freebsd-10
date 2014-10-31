@@ -47,12 +47,12 @@ sleep 5
 echo "==> Getting output of ifconfig"
 ifconfig
 echo ""
-sleep 10
+sleep 5
 
 echo "==> Testing host lookup of pkg.FreeBSD.org"
 host pkg.FreeBSD.org
 echo ""
-sleep 10
+sleep 5
 
 # Set Time Zone to UTC
 echo "==> Setting Time Zone to UTC"
@@ -60,13 +60,13 @@ echo "==> Setting Time Zone to UTC"
 /usr/bin/touch /etc/wall_cmos_clock
 /sbin/adjkerntz -a
 echo ""
-sleep 10
+sleep 5
 
 # Install packages
 echo "==> Installing packages"
 env ASSUME_ALWAYS_YES=YES pkg install -y bash curl node npm ntp vim-lite wget
 echo ""
-sleep 10
+sleep 5
 
 # Install me-freebsd
 echo "==> Contents of /usr/freebsd-dist/:"
