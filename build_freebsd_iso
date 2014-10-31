@@ -76,14 +76,14 @@ function create_layout() {
     cp -R ./me-freebsd/ $CUSTOM_ISO_LAYOUT/usr/freebsd-dist/me-freebsd/
   fi
   
-  sleep 10
   echo "==> Copying $INSTALLER_CFG to $CUSTOM_ISO_LAYOUT"
   cp $INSTALLER_CFG $CUSTOM_ISO_LAYOUT/etc/
   
-  sleep 10
   echo "==> Enable serial and internal consoles"
   echo "-Dh" > $CUSTOM_ISO_LAYOUT/boot.config
   echo "cuaa0   "/usr/libexec/getty std.38400"  xterm   on  secure" >> $CUSTOM_ISO_LAYOUT/etc/ttys
+  
+  
   
   echo "==> Unmounting $ISO_MOUNT"
   umount $ISO_MOUNT
