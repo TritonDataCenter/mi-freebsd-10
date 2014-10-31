@@ -39,11 +39,6 @@ echo "== Starting dhclient for vtnet0"
 dhclient vtnet0
 sleep 5
 
-echo "==> Getting output of ifconfig"
-ifconfig
-echo ""
-sleep 5
-
 # Set Time Zone to UTC
 echo "==> Setting Time Zone to UTC"
 /bin/cp /usr/share/zoneinfo/UTC /etc/localtime
