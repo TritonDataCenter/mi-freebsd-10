@@ -30,11 +30,9 @@ function fetch_iso() {
   else
       echo "==> Local copy not found."
       echo "==> Fetching ISO from $MIRROR..."
-      cd $ISO_DIR
-      curl -O --progress-bar ftp://${MIRROR}/${MIRROR_PATH}/${RELEASE}/${ISO}
+      curl -o ${ISO_DIR}/${ISO} --progress-bar ftp://${MIRROR}/${MIRROR_PATH}/${RELEASE}/${ISO}
       echo "==> Done!"
       echo "==> ${ISO} saved to $ISO_DIR/"
-      cd
   fi
 }
 
