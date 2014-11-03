@@ -33,6 +33,9 @@ echo "==> Installing packages"
 env ASSUME_ALWAYS_YES=YES pkg install -y bash curl node npm ntp vim-lite wget
 sleep 5
 
+echo "== Enable root login via ssh"
+sed -i.bak -e s/#PermitRootLogin\ no/PermitRootLogin\ yes/g /etc/ssh/sshd_config
+
 ## Build date used for motd and product file
 BUILDDATE=$(date +%Y%m%d)
 RELEASE="10.0"
