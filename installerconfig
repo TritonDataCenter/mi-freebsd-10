@@ -1,5 +1,5 @@
 PARTITIONS=vtbd0
-DISTRIBUTIONS="kernel.txz base.txz"
+DISTRIBUTIONS="kernel.txz base.txz joyent.txz"
 
 #!/bin/sh
 echo "==> Running installerconfig"
@@ -7,7 +7,7 @@ echo "==> Running installerconfig"
 # Enable serial and internal consoles
 echo "==> Enabling serial and internal consoles"
 echo "-Dh" > /boot.config
-echo "cuaa0   "/usr/libexec/getty std.38400"  xterm   on  secure" >> /etc/ttys
+echo "cuaa0   \"/usr/libexec/getty std.38400\"  xterm   on  secure" >> /etc/ttys
 echo ""
 sleep 5
 
@@ -27,14 +27,6 @@ RC_CONF
 echo ""
 sleep 5
 
-echo "== Getting ifconfig info"
-ifconfig
-sleep 5
-
-echo "== Starting netif"
-service netif start
-sleep 5
-
 # Set Time Zone to UTC
 echo "==> Setting Time Zone to UTC"
 /bin/cp /usr/share/zoneinfo/UTC /etc/localtime
@@ -44,16 +36,9 @@ echo ""
 sleep 5
 
 echo "==> Installing packages"
-env ASSUME_ALWAYS_YES=YES pkg install -y bash
-#  curl node npm ntp vim-lite wget
+env ASSUME_ALWAYS_YES=YES pkg install -y bash curl node npm ntp vim-lite wget
 echo ""
 sleep 5
-
-# Install me-freebsd
-#echo "==> Contents of /usr/freebsd-dist/:"
-#ls /usr/freebsd-dist/
-#echo ""
-#cp -R /usr/freebsd-dist/me-freebsd/ /
 
 ## Build date used for motd and product file
 BUILDDATE=$(date +%Y%m%d)

@@ -6,12 +6,13 @@ IFS=$'\n\t'
 RELEASE="10.0"
 MIRROR="ftp.freebsd.org"
 MIRROR_PATH="pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES"
-ISO="FreeBSD-10.0-RELEASE-amd64-dvd1.iso"
+ISO="FreeBSD-10.0-RELEASE-amd64-disc1.iso"
 ISO_DIR="/data/freebsd-iso"
 ISO_MOUNT="/mnt/freebsd-iso"
 CUSTOM_ISO_LAYOUT="/data/custom-freebsd-iso"
 CUSTOM_ISO_TITLE="FREEBSD_INSTALL"
 CUSTOM_ISO_FILENAME="freebsd-10-custom.iso"
+ME_FREEBSD_DIST_NAME="joyent.txz"
 INSTALLER_CFG="installerconfig"
 
 # Clean up ISO file if download is interupted
@@ -30,11 +31,9 @@ function fetch_iso() {
   else
       echo "==> Local copy not found."
       echo "==> Fetching ISO from $MIRROR..."
-      cd $ISO_DIR
-      curl -O --progress-bar ftp://${MIRROR}/${MIRROR_PATH}/${RELEASE}/${ISO}
+      curl -o ${ISO_DIR}/${ISO} --progress-bar ftp://${MIRROR}/${MIRROR_PATH}/${RELEASE}/${ISO}
       echo "==> Done!"
       echo "==> ${ISO} saved to $ISO_DIR/"
-      cd
   fi
 }
 
@@ -67,24 +66,32 @@ function create_layout() {
   if [[ ! -d me-freebsd ]]; then
     echo "===> Getting me-freebsd..."
     git clone https://github.com/chorrell/me-freebsd.git
-    else
+  else
     echo "===> Updating me-freebsd before copying to $CUSTOM_ISO_LAYOUT..."
-    cd me-freebsd
-    git pull
-    cd ..
-    echo "===> Copying me-freebsd to $CUSTOM_ISO_LAYOUT/usr/freebsd-dist..."
-    cp -R ./me-freebsd/ $CUSTOM_ISO_LAYOUT/usr/freebsd-dist/me-freebsd/
+    ( cd me-freebsd
+      git pull
+    )
   fi
-  
+
+  integrate_me_freebsd_dstribution
+
   echo "==> Copying $INSTALLER_CFG to $CUSTOM_ISO_LAYOUT"
   cp $INSTALLER_CFG $CUSTOM_ISO_LAYOUT/etc/
   
   echo "==> Enable serial and internal consoles"
   echo "-Dh" > $CUSTOM_ISO_LAYOUT/boot.config
-  echo "cuaa0   "/usr/libexec/getty std.38400"  xterm   on  secure" >> $CUSTOM_ISO_LAYOUT/etc/ttys
+  echo "cuaa0   \"/usr/libexec/getty std.38400\"  xterm   on  secure" >> $CUSTOM_ISO_LAYOUT/etc/ttys
   
-  echo "==> Get ifconfig info from blank VM"
-  echo "ifconfig" >> $CUSTOM_ISO_LAYOUT/etc/rc.conf
+  echo "==> Get network up automatically in the blank VM"
+  echo "ifconfig_vtnet0=\"DHCP\"" >> $CUSTOM_ISO_LAYOUT/etc/rc.conf
+  echo "ifconfig_vtnet1=\"DHCP\"" >> $CUSTOM_ISO_LAYOUT/etc/rc.conf
+  
+  echo "==> Remove resolv.conf symlink"
+  rm $CUSTOM_ISO_LAYOUT/etc/resolv.conf
+
+  echo "==> Set resolvers in the blank VM"
+  echo "nameserver 8.8.8.8" >> $CUSTOM_ISO_LAYOUT/etc/resolv.conf
+  echo "nameserver 8.8.4.4" >> $CUSTOM_ISO_LAYOUT/etc/resolv.conf
   
   echo "==> Unmounting $ISO_MOUNT"
   umount $ISO_MOUNT
@@ -97,6 +104,24 @@ function create_newiso() {
     -p "Joyent" -b boot/cdboot \
     -o $CUSTOM_ISO_FILENAME $CUSTOM_ISO_LAYOUT
   echo "==> Custom ISO now ready: $CUSTOM_ISO_FILENAME"
+}
+
+function integrate_me_freebsd_dstribution() {
+  echo "==> Integrating me-freebsd distribution"
+
+  [[ -f $ME_FREEBSD_DIST_NAME ]] && rm $ME_FREEBSD_DIST_NAME
+
+  ( cd me-freebsd
+    tar -cvJpf ../${ME_FREEBSD_DIST_NAME} ./etc ./lib
+  )
+
+  DISTFILE_SHASUM_STDOUT=$(shasum -a 256 $ME_FREEBSD_DIST_NAME)
+  DISTFILE_SHASUM_PLAIN=${DISTFILE_SHASUM_STDOUT% *}
+  DISTFILE_FILECOUNT=$(tar -tf $ME_FREEBSD_DIST_NAME | wc -l | tr -d ' ')
+
+  echo -e "${ME_FREEBSD_DIST_NAME}\t${DISTFILE_SHASUM_PLAIN}\t${DISTFILE_FILECOUNT}\t${ME_FREEBSD_DIST_NAME%.*}\t\"Joyent smartmachine tools\"\ton" >> ${CUSTOM_ISO_LAYOUT}/usr/freebsd-dist/MANIFEST
+
+  cp $ME_FREEBSD_DIST_NAME ${CUSTOM_ISO_LAYOUT}/usr/freebsd-dist/${ME_FREEBSD_DIST_NAME}
 }
 
 echo "==> ISO Build Starting!"
