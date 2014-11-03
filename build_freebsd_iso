@@ -83,7 +83,7 @@ function create_layout() {
   echo "cuaa0   \"/usr/libexec/getty std.38400\"  xterm   on  secure" >> $CUSTOM_ISO_LAYOUT/etc/ttys
   
   echo "==> Setting autoboot delay to 5 seconds"
-  echo "autoboot_delay=\"5\"" >> /boot/loader.conf
+  echo "autoboot_delay=\"5\"" >> $CUSTOM_ISO_LAYOUT/boot/loader.conf
   
   echo "==> Get network up automatically in the blank VM"
   echo "ifconfig_vtnet0=\"DHCP\"" >> $CUSTOM_ISO_LAYOUT/etc/rc.conf
