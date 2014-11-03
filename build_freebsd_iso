@@ -112,7 +112,7 @@ function integrate_me_freebsd_dstribution() {
   [[ -f $ME_FREEBSD_DIST_NAME ]] && rm $ME_FREEBSD_DIST_NAME
 
   ( cd me-freebsd
-    tar -cvJpf ../${ME_FREEBSD_DIST_NAME} ./etc ./lib
+    tar -cvJpf ../${ME_FREEBSD_DIST_NAME} ./etc ./lib ./usr
   )
 
   DISTFILE_SHASUM_STDOUT=$(shasum -a 256 $ME_FREEBSD_DIST_NAME)
