@@ -8,8 +8,6 @@ echo "==> Running installerconfig"
 echo "==> Enabling serial and internal consoles"
 echo "-Dh" > /boot.config
 echo "cuaa0   \"/usr/libexec/getty std.38400\"  xterm   on  secure" >> /etc/ttys
-echo ""
-sleep 5
 
 echo "==> Setting up rc.conf"
 cat > /etc/rc.conf << RC_CONF
@@ -24,20 +22,15 @@ ntpd_enable="YES"
 ntpd_sync_on_start="YES"
 
 RC_CONF
-echo ""
-sleep 5
 
 # Set Time Zone to UTC
 echo "==> Setting Time Zone to UTC"
 /bin/cp /usr/share/zoneinfo/UTC /etc/localtime
 /usr/bin/touch /etc/wall_cmos_clock
 /sbin/adjkerntz -a
-echo ""
-sleep 5
 
 echo "==> Installing packages"
 env ASSUME_ALWAYS_YES=YES pkg install -y bash curl node npm ntp vim-lite wget
-echo ""
 sleep 5
 
 ## Build date used for motd and product file
@@ -70,7 +63,6 @@ own environment and tools.
 PRODUCT
 
 echo "End of installerconfig"
-sleep 10
 
 # Shutdown/Poweroff
 poweroff
