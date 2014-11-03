@@ -30,6 +30,9 @@ echo "==> Setting Time Zone to UTC"
 /sbin/adjkerntz -a
 
 echo "==> Installing packages"
+env ASSUME_ALWAYS_YES=YES pkg bootstap
+sleep 5
+env ASSUME_ALWAYS_YES=YES pkg update -f
 env ASSUME_ALWAYS_YES=YES pkg install -y bash curl node npm ntp vim-lite wget
 sleep 5
 
