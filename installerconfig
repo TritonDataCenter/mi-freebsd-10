@@ -7,7 +7,7 @@ echo "==> Running installerconfig"
 # Enable serial and internal consoles
 echo "==> Enabling serial and internal consoles"
 echo "-Dh" > /boot.config
-echo "cuaa0   \"/usr/libexec/getty std.38400\"  xterm   on  secure" >> /etc/ttys
+echo "cuau0   \"/usr/libexec/getty std.38400\"  xterm   on  secure" >> /etc/ttys
 
 echo "==> Setting up rc.conf"
 cat > /etc/rc.conf << RC_CONF
@@ -32,10 +32,12 @@ echo "==> Setting Time Zone to UTC"
 echo "==> Installing packages"
 env ASSUME_ALWAYS_YES=YES pkg update -f
 env ASSUME_ALWAYS_YES=YES pkg install -y bash curl node npm ntp vim-lite wget
-sleep 5
 
 echo "== Enable root login via ssh"
 sed -i.bak -e s/#PermitRootLogin\ no/PermitRootLogin\ yes/g /etc/ssh/sshd_config
+
+echo "==> Disable tunneled clear text passwords. Login is via ssh key only."
+sed -i.bak -e s/#PubkeyAuthentication\ yes/PasswordAuthentication\ no/g /etc/ssh/sshd_config
 
 ## Build date used for motd and product file
 BUILDDATE=$(date +%Y%m%d)
