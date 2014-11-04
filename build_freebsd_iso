@@ -80,7 +80,7 @@ function create_layout() {
   
   echo "==> Enable serial and internal consoles"
   echo "-Dh" > $CUSTOM_ISO_LAYOUT/boot.config
-  echo "cuaa0   \"/usr/libexec/getty std.38400\"  xterm   on  secure" >> $CUSTOM_ISO_LAYOUT/etc/ttys
+  echo "cuau0   \"/usr/libexec/getty std.38400\"  xterm   on  secure" >> $CUSTOM_ISO_LAYOUT/etc/ttys
   
   echo "==> Setting autoboot delay to 5 seconds"
   echo "autoboot_delay=\"5\"" >> $CUSTOM_ISO_LAYOUT/boot/loader.conf
