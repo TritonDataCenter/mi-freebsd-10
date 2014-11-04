@@ -37,6 +37,9 @@ sleep 5
 echo "== Enable root login via ssh"
 sed -i.bak -e s/#PermitRootLogin\ no/PermitRootLogin\ yes/g /etc/ssh/sshd_config
 
+echo "==> Disable tunneled clear text passwords. Login is via ssh key only."
+sed -i.bak -e s/#PubkeyAuthentication\ yes/PasswordAuthentication\ no/g /etc/ssh/sshd_config
+
 ## Build date used for motd and product file
 BUILDDATE=$(date +%Y%m%d)
 RELEASE="10.0"
