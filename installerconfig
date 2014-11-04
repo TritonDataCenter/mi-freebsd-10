@@ -1,17 +1,21 @@
 PARTITIONS=vtbd0
-DISTRIBUTIONS="kernel.txz base.txz"
-
+DISTRIBUTIONS="kernel.txz base.txz joyent.txz"
 
 #!/bin/sh
-echo "*** Running installerconfig ***"
+echo "==> Running installerconfig"
 
-# Setup /etc/rc.conf
+# Enable serial and internal consoles
+echo "==> Enabling serial and internal consoles"
+echo "-Dh" > /boot.config
+echo "cuaa0   \"/usr/libexec/getty std.38400\"  xterm   on  secure" >> /etc/ttys
+
+echo "==> Setting up rc.conf"
 cat > /etc/rc.conf << RC_CONF
 fsck_y_enable="YES"
 dumpdev="AUTO"
 
-ifconfig_em0="DHCP"
 ifconfig_vtnet0="DHCP"
+ifconfig_vtnet1="DHCP"
 
 sshd_enable="YES"
 ntpd_enable="YES"
@@ -19,18 +23,19 @@ ntpd_sync_on_start="YES"
 
 RC_CONF
 
-# Set nameservers
-echo 'nameserver 8.8.8.8' >> /etc/resolv.conf
-echo 'nameserver 8.8.4.4' >> /etc/resolv.conf
-
 # Set Time Zone to UTC
+echo "==> Setting Time Zone to UTC"
 /bin/cp /usr/share/zoneinfo/UTC /etc/localtime
 /usr/bin/touch /etc/wall_cmos_clock
 /sbin/adjkerntz -a
 
-# Install packages
-env ASSUME_ALWAYS_YES=YES pkg bootstrap
-pkg install -y bash curl node npm ntp vim-lite wget
+echo "==> Installing packages"
+env ASSUME_ALWAYS_YES=YES pkg update -f
+env ASSUME_ALWAYS_YES=YES pkg install -y bash curl node npm ntp vim-lite wget
+sleep 5
+
+echo "== Enable root login via ssh"
+sed -i.bak -e s/#PermitRootLogin\ no/PermitRootLogin\ yes/g /etc/ssh/sshd_config
 
 ## Build date used for motd and product file
 BUILDDATE=$(date +%Y%m%d)

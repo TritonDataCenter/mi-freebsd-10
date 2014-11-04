@@ -12,7 +12,7 @@ This must be run on a FreeBSD machine or VirtualMachine.
 Before using mi-freebsd-10, please install the following packages:
 
 ```
-pkg install -y rsync cdrtools git
+pkg install -y bash rsync cdrtools git
 ```
 
 ## Usage
