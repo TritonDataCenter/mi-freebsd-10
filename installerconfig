@@ -9,6 +9,9 @@ echo "==> Enabling serial and internal consoles"
 echo "-Dh" > /boot.config
 echo "cuau0   \"/usr/libexec/getty std.38400\"  xterm   on  secure" >> /etc/ttys
 
+echo "==> Setting autoboot delay to 5 seconds. Default is 10"
+echo "autoboot_delay=\"5\"" >> /boot/loader.conf
+
 echo "==> Setting up rc.conf"
 cat > /etc/rc.conf << RC_CONF
 fsck_y_enable="YES"
