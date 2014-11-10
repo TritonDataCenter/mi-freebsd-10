@@ -17,8 +17,8 @@ cat > /etc/rc.conf << RC_CONF
 fsck_y_enable="YES"
 dumpdev="AUTO"
 
-ifconfig_vtnet0="DHCP"
-ifconfig_vtnet1="DHCP"
+# Enable SmartDataCenter support. Do not remove.
+smartdc_enable="YES"
 
 sshd_enable="YES"
 ntpd_enable="YES"
