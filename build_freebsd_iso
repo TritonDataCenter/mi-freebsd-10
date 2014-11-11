@@ -65,7 +65,7 @@ function create_layout() {
   echo "==> Copying guest tools to $CUSTOM_ISO_LAYOUT:"
   if [[ ! -d me-freebsd ]]; then
     echo "===> Getting me-freebsd..."
-    git clone https://github.com/chorrell/me-freebsd.git
+    git clone https://github.com/joyent/me-freebsd.git
   else
     echo "===> Updating me-freebsd before copying to $CUSTOM_ISO_LAYOUT..."
     ( cd me-freebsd
