@@ -33,6 +33,6 @@ You can modify the following if you'd prefer a different ISO, architexture, or F
 ```
 MIRROR="ftp.freebsd.org"
 MIRROR_PATH="pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES"
-ISO="FreeBSD-10.1-RELEASE-amd64-disc1.iso"
+ISO="FreeBSD-10.0-RELEASE-amd64-disc1.iso"
 CUSTOM_ISO_FILENAME="freebsd-10-custom.iso"
 ```
