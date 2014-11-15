@@ -10,7 +10,6 @@ ISO="FreeBSD-10.0-RELEASE-amd64-disc1.iso"
 ISO_DIR="/data/freebsd-iso"
 ISO_MOUNT="/mnt/freebsd-iso"
 CUSTOM_ISO_LAYOUT="/data/custom-freebsd-iso"
-CUSTOM_ISO_TITLE="FREEBSD_INSTALL"
 CUSTOM_ISO_FILENAME="freebsd-10-custom.iso"
 ME_FREEBSD_DIST_NAME="joyent.txz"
 INSTALLER_CFG="installerconfig"
@@ -101,6 +100,10 @@ function create_layout() {
 }
 
 function create_newiso() {
+  echo "==> Getting Volume ID for ${ISO}"
+  CUSTOM_ISO_TITLE=$(isoinfo -d -i ${ISO_DIR}/${ISO} | grep "Volume id" | awk '{print $3}')
+  echo "==> Volume ID is $CUSTOM_ISO_TITLE"
+  
   echo "==> Preparing NEW ISO"
   mkisofs -J -R -no-emul-boot \
     -V "$CUSTOM_ISO_TITLE" \
