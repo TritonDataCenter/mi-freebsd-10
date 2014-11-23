@@ -34,7 +34,7 @@ echo "==> Setting Time Zone to UTC"
 
 echo "==> Installing packages"
 env ASSUME_ALWAYS_YES=YES pkg update -f
-env ASSUME_ALWAYS_YES=YES pkg install -y bash curl node npm ntp vim-lite wget
+env ASSUME_ALWAYS_YES=YES pkg install -y bash curl node npm vim-lite wget
 
 echo "== Enable root login via ssh"
 sed -i.bak -e s/#PermitRootLogin\ no/PermitRootLogin\ without-password/g /etc/ssh/sshd_config
