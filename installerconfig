@@ -32,6 +32,10 @@ echo "==> Setting Time Zone to UTC"
 /usr/bin/touch /etc/wall_cmos_clock
 /sbin/adjkerntz -a
 
+# Fetch and install binary updates. Ensures we have the latest security fixes.
+freebsd-update fetch
+freebsd-update install
+
 echo "==> Installing packages"
 env ASSUME_ALWAYS_YES=YES pkg update -f
 env ASSUME_ALWAYS_YES=YES pkg install -y bash curl node npm vim-lite wget
