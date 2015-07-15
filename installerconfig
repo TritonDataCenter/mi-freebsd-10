@@ -36,6 +36,10 @@ echo "==> Setting Time Zone to UTC"
 
 # Fetch and install binary updates. Ensures we have the latest security fixes.
 echo "==> Running freebsd-update fetch and freebsd-update install"
+# Remove src from update since it's not installed
+# See https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=198030
+sed -i.bak -e s/Components\ src\ world\ kernel/Components\ world\ kernel/g /etc/freebsd-update.conf
+
 env PAGER=cat freebsd-update fetch
 freebsd-update install
 
