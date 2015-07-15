@@ -2,6 +2,8 @@ PARTITIONS=vtbd0
 DISTRIBUTIONS="kernel.txz base.txz joyent.txz"
 
 #!/bin/sh
+
+set -o xtrace
 echo "==> Running installerconfig"
 
 # Enable serial and internal consoles
@@ -33,6 +35,7 @@ echo "==> Setting Time Zone to UTC"
 /sbin/adjkerntz -a
 
 # Fetch and install binary updates. Ensures we have the latest security fixes.
+echo "==> Running freebsd-update fetch and freebsd-update install"
 env PAGER=cat freebsd-update fetch
 freebsd-update install
 
