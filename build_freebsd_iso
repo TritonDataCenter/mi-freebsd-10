@@ -31,15 +31,7 @@ function fetch_iso() {
   
   echo "==> Checking for local copy of $ISO..."
   if [[ -e $ISO_DIR/$ISO ]]; then
-    echo "==> Found $ISO"
-    
-    echo "==> Verifying $ISO with ${SHA256SUM}"
-    if [[ "$(sha256 $ISO_DIR/$ISO | cut -f2 -d= | tr -d '[[:space:]]')" == "$(grep "($ISO)" $ISO_DIR/${SHA256SUM} | cut -f2 -d= | tr -d '[[:space:]]')" ]]; then
-        echo "==> Checksums match, using local copy of $ISO"
-    else
-        echo "==> Checksums don't match!"
-        exit 1
-    fi
+    echo "==> Found local copy of $ISO"
     
   else
       echo "==> Local copy not found."
