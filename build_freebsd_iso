@@ -33,9 +33,9 @@ function fetch_iso() {
     echo "==> Found $ISO"
     
     echo "==> Verifying $ISO with ${SHA256SUM}"
-    CHECKSUM=$(grep "($ISO)" ${SHA256SUM})
+    CHECKSUM=$(grep "($ISO)" $ISO_DIR/${SHA256SUM})
     
-    if [[ "$(sha256 $ISO)" == "$CHECKSUM" ]]; then
+    if [[ "$(sha256 $ISO_DIR/$ISO)" == "$CHECKSUM" ]]; then
         echo "==> Checksums match, using local copy of $ISO"
     else
         echo "==> Checksums don't match!"
@@ -50,9 +50,9 @@ function fetch_iso() {
       echo "==> ${ISO} saved to $ISO_DIR/"
       
       echo "==> Verifying $ISO with ${SHA256SUM}"
-      CHECKSUM=$(grep "($ISO)" ${SHA256SUM})
+      CHECKSUM=$(grep "($ISO)" $ISO_DIR/${SHA256SUM})
     
-      if [[ "$(sha256 $ISO)" == "$CHECKSUM" ]]; then
+      if [[ "$(sha256 $ISO_DIR/$ISO)" == "$CHECKSUM" ]]; then
           echo "==> Checksums match. "
       else
           echo "==> Checksums don't match!"
