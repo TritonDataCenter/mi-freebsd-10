@@ -10,6 +10,7 @@ ISO="FreeBSD-${RELEASE}-RELEASE-amd64-disc1.iso"
 ISO_DIR="/data/freebsd-iso"
 ISO_MOUNT="/mnt/freebsd-iso"
 CUSTOM_ISO_LAYOUT="/data/custom-freebsd-iso"
+SHA256SUM="CHECKSUM.SHA256-10.1-RELEASE-amd64"
 CUSTOM_ISO_FILENAME="freebsd-10-custom.iso"
 ME_FREEBSD_DIST_NAME="joyent.txz"
 INSTALLER_CFG="installerconfig"
@@ -24,15 +25,30 @@ function fetch_iso() {
     mkdir -p $ISO_DIR
   fi
   
+  echo "==> Fetching ${SHA256SUM}"
+  curl -o ${ISO_DIR}/${SHA256SUM} ftp://${MIRROR}/${MIRROR_PATH}/${RELEASE}/${SHA256SUM}
+  
   echo "==> Checking for local copy of $ISO..."
   if [[ -e $ISO_DIR/$ISO ]]; then
     echo "==> Found $ISO"
+    
+    echo "==> Verifying $ISO with ${SHA256SUM}"
+    pushd $PWD
+    cd $ISO_DIR
+    grep "$ISO\$" ${SHA256SUM}| sha256sum -c - 
+    popd
+    
   else
       echo "==> Local copy not found."
       echo "==> Fetching ISO from $MIRROR..."
       curl -o ${ISO_DIR}/${ISO} --progress-bar ftp://${MIRROR}/${MIRROR_PATH}/${RELEASE}/${ISO}
       echo "==> Done!"
       echo "==> ${ISO} saved to $ISO_DIR/"
+      echo "==> Verifying $ISO with ${SHA256SUM}"
+      pushd $PWD
+      cd $ISO_DIR
+      grep "$ISO\$" ${SHA256SUM}| sha256sum -c - 
+      popd
   fi
 }
 
