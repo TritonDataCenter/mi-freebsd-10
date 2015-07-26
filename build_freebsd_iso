@@ -33,10 +33,14 @@ function fetch_iso() {
     echo "==> Found $ISO"
     
     echo "==> Verifying $ISO with ${SHA256SUM}"
-    pushd $PWD
-    cd $ISO_DIR
-    grep "$ISO\$" ${SHA256SUM}| sha256sum -c - 
-    popd
+    CHECKSUM=$(grep "($ISO)" ${SHA256SUM})
+    
+    if [[ "$(sha256 $ISO)" == "$CHECKSUM" ]]; then
+        echo "==> Checksums match, using local copy of $ISO"
+    else
+        echo "==> Checksums don't match!"
+        exit 1
+    fi
     
   else
       echo "==> Local copy not found."
@@ -44,11 +48,16 @@ function fetch_iso() {
       curl -o ${ISO_DIR}/${ISO} ftp://${MIRROR}/${MIRROR_PATH}/${RELEASE}/${ISO}
       echo "==> Done!"
       echo "==> ${ISO} saved to $ISO_DIR/"
+      
       echo "==> Verifying $ISO with ${SHA256SUM}"
-      pushd $PWD
-      cd $ISO_DIR
-      grep "$ISO\$" ${SHA256SUM}| sha256sum -c - 
-      popd
+      CHECKSUM=$(grep "($ISO)" ${SHA256SUM})
+    
+      if [[ "$(sha256 $ISO)" == "$CHECKSUM" ]]; then
+          echo "==> Checksums match. "
+      else
+          echo "==> Checksums don't match!"
+          exit 1
+      fi
   fi
 }
 
