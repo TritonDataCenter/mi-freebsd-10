@@ -3,7 +3,7 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-RELEASE="10.1"
+RELEASE="10.2"
 MIRROR="ftp.freebsd.org"
 MIRROR_PATH="pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES"
 ISO="FreeBSD-${RELEASE}-RELEASE-amd64-disc1.iso"
