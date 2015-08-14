@@ -5,7 +5,7 @@ IFS=$'\n\t'
 
 RELEASE="10.2"
 MIRROR="ftp.freebsd.org"
-MIRROR_PATH="pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES"
+MIRROR_PATH="pub/FreeBSD/releases/ISO-IMAGES/$RELEASE/"
 ISO="FreeBSD-${RELEASE}-RELEASE-amd64-disc1.iso"
 ISO_DIR="/data/freebsd-iso"
 ISO_MOUNT="/mnt/freebsd-iso"
