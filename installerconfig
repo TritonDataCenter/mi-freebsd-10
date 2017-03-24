@@ -84,6 +84,7 @@ PRODUCT
 
 echo "Cleaning up"
 rm -rf /tmp/installscript
+rm -rf /var/db/freebsd-update/*
 
 echo "End of installerconfig"
 
