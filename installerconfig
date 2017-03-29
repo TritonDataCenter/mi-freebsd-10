@@ -17,7 +17,6 @@ echo "autoboot_delay=\"5\"" >> /boot/loader.conf
 echo "==> Setting up rc.conf"
 cat > /etc/rc.conf << RC_CONF
 fsck_y_enable="YES"
-dumpdev="AUTO"
 
 # Enable SmartDataCenter support. Do not remove.
 smartdc_enable="YES"
