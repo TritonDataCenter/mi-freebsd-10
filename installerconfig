@@ -111,7 +111,6 @@ PRODUCT
 echo "Cleaning up"
 rm -rf /tmp/installscript
 rm -rf /var/db/freebsd-update/*
-rm -rf /boot/kernel.old
 rm -rf /tmp/freebsd-update.conf
 
 echo "End of installerconfig"
