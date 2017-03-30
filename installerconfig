@@ -8,7 +8,7 @@ echo "==> Running installerconfig"
 
 # Enable serial and internal consoles
 echo "==> Enabling serial and internal consoles"
-echo "-Dh" > /boot.config
+echo "-Dhv" > /boot.config
 echo "cuau0   \"/usr/libexec/getty std.38400\"  xterm   on  secure" >> /etc/ttys
 
 echo "==> Adding boot loader settings"
