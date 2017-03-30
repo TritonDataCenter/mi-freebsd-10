@@ -45,10 +45,29 @@ echo "==> Running freebsd-update fetch and freebsd-update install"
 # See https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=198030
 sed -i.bak -e s/Components\ src\ world\ kernel/Components\ world\ kernel/g /etc/freebsd-update.conf
 
-echo "Components world/base kernel" >> /etc/freebsd-update.conf
+cat << FREEBSDUPDATE > /tmp/freebsd-update.conf
+KeyPrint 800651ef4b4c71c27e60786d7b487188970f4b4169cc055784e21eb71d410cc5
 
-env PAGER=cat freebsd-update fetch
-freebsd-update install
+ServerName update.FreeBSD.org
+
+Components world/base kernel
+
+IgnorePaths
+
+IDSIgnorePaths /usr/share/man/cat
+IDSIgnorePaths /usr/share/man/whatis
+IDSIgnorePaths /var/db/locate.database
+IDSIgnorePaths /var/log
+
+UpdateIfUnmodified /etc/ /var/ /root/ /.cshrc /.profile
+
+MergeChanges /etc/ /boot/device.hints
+
+BackupKernel no
+FREEBSDUPDATE
+
+env PAGER=cat freebsd-update -f /tmp/freebsd-update.conf fetch
+env PAGER=cat freebsd-update -f /tmp/freebsd-update.conf install
 
 echo "==> Installing packages"
 env ASSUME_ALWAYS_YES=YES pkg update -f
@@ -93,7 +112,7 @@ echo "Cleaning up"
 rm -rf /tmp/installscript
 rm -rf /var/db/freebsd-update/*
 rm -rf /boot/kernel.old
-sed -i.bak -e s/Components\ world\/base\ kernel/d /etc/freebsd-update.conf
+rm -rf /tmp/freebsd-update.conf
 
 echo "End of installerconfig"
 
