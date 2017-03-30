@@ -45,6 +45,8 @@ echo "==> Running freebsd-update fetch and freebsd-update install"
 # See https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=198030
 sed -i.bak -e s/Components\ src\ world\ kernel/Components\ world\ kernel/g /etc/freebsd-update.conf
 
+echo "Components world/base kernel" >> /etc/freebsd-update.conf
+
 env PAGER=cat freebsd-update fetch
 freebsd-update install
 
@@ -91,6 +93,7 @@ echo "Cleaning up"
 rm -rf /tmp/installscript
 rm -rf /var/db/freebsd-update/*
 rm -rf /boot/kernel.old
+sed -i.bak -e s/Components\ world\/base\ kernel/d /etc/freebsd-update.conf
 
 echo "End of installerconfig"
 
