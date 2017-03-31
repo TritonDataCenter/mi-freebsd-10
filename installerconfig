@@ -1,5 +1,6 @@
 PARTITIONS=vtbd0
 DISTRIBUTIONS="kernel.txz base.txz joyent.txz"
+BSDINSTALL_DISTSITE=ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/10.3-RELEASE
 
 #!/bin/sh
 
