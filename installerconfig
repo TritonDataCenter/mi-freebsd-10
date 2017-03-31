@@ -15,6 +15,7 @@ echo "==> Adding boot loader settings"
 cat << BOOT > /boot/loader.conf
 autoboot_delay="5"
 verbose_loading="YES"
+hw.snd.default_auto=0
 hw.usb.disable_enumeration=1
 hw.usb.no_boot_wait=1
 hw.usb.no_shutdown_wait=1
