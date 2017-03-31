@@ -83,7 +83,7 @@ sed -i.bak -e s/#PermitRootLogin\ no/PermitRootLogin\ without-password/g /etc/ss
 ## Build date used for motd and product file
 BUILDDATE=$(date +%Y%m%d)
 RELEASE="10.3-RELEASE"
-DOC_URL="https://docs.joyent.com/images/freebsd"
+DOC_URL="https://docs.joyent.com/images/kvm/freebsd"
 
 # Create MOTD
 echo "Creating /etc/motd"
