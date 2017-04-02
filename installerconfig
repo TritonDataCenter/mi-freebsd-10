@@ -114,6 +114,7 @@ echo "Cleaning up"
 rm -rf /tmp/installscript
 rm -rf /var/db/freebsd-update/*
 rm -rf /tmp/freebsd-update.conf
+rm -rf /boot/kernel/*.symbols
 
 echo "End of installerconfig"
 
