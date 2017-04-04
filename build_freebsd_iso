@@ -3,6 +3,13 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+TRACE=
+
+if [[ -n "$TRACE" ]]; then
+  export PS4='[\D{%FT%TZ}] ${BASH_SOURCE}:${LINENO}: ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+  set -o xtrace
+fi
+
 RELEASE="10.3"
 MIRROR="ftp.freebsd.org"
 MIRROR_PATH="pub/FreeBSD/releases/ISO-IMAGES"
