@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-IFS=$'\n\t'
-
-TRACE=
-
 if [[ -n "$TRACE" ]]; then
   export PS4='[\D{%FT%TZ}] ${BASH_SOURCE}:${LINENO}: ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
   set -o xtrace
 fi
+
+set -euo pipefail
+IFS=$'\n\t'
 
 RELEASE="10.3"
 MIRROR="ftp.freebsd.org"
@@ -31,23 +29,23 @@ function fetch_iso() {
   if [[ ! -d $ISO_DIR ]]; then
     mkdir -p $ISO_DIR
   fi
-  
+
   echo "==> Fetching ${SHA256SUM}"
   curl -o ${ISO_DIR}/${SHA256SUM} ftp://${MIRROR}/${MIRROR_PATH}/${RELEASE}/${SHA256SUM}
-  
+
   echo "==> Checking for local copy of $ISO..."
   if [[ -e $ISO_DIR/$ISO ]]; then
     echo "==> Found local copy of $ISO"
-    
+
   else
       echo "==> Local copy not found."
       echo "==> Fetching ISO from $MIRROR..."
       curl -o ${ISO_DIR}/${ISO} ftp://${MIRROR}/${MIRROR_PATH}/${RELEASE}/${ISO}
       echo "==> Done!"
       echo "==> ${ISO} saved to $ISO_DIR/"
-      
+
       echo "==> Verifying $ISO with ${SHA256SUM}"
-    
+
       if [[ "$(sha256 $ISO_DIR/$ISO | cut -f2 -d= | tr -d '[[:space:]]')" == "$(grep "($ISO)" $ISO_DIR/${SHA256SUM} | cut -f2 -d= | tr -d '[[:space:]]')" ]]; then
           echo "==> Checksums match."
       else
@@ -65,23 +63,23 @@ function create_layout() {
   fi
   echo "==> Creating $CUSTOM_ISO_LAYOUT"
   mkdir -p $CUSTOM_ISO_LAYOUT
-  
+
   if [[ ! -d $ISO_MOUNT ]]; then
       echo "==> Creating $ISO_MOUNT ..."
-      mkdir $ISO_MOUNT 
+      mkdir $ISO_MOUNT
   fi
-  
+
   if [[ $(df | grep $ISO_MOUNT) ]]; then
     echo "==> Unmounting previous $ISO_MOUNT..."
     umount $ISO_MOUNT
   fi
-  
+
   echo "==> Mounting $ISO to $ISO_MOUNT"
   mount -t cd9660 /dev/`mdconfig -f $ISO_DIR/$ISO` $ISO_MOUNT
-  
+
   echo "==> Copying layout from $ISO_MOUNT to $CUSTOM_ISO_LAYOUT"
   rsync -aq  $ISO_MOUNT/ $CUSTOM_ISO_LAYOUT
-  
+
   echo "==> Copying guest tools to $CUSTOM_ISO_LAYOUT:"
   if [[ ! -d me-freebsd ]]; then
     echo "===> Getting me-freebsd..."
@@ -97,25 +95,25 @@ function create_layout() {
 
   echo "==> Copying $INSTALLER_CFG to $CUSTOM_ISO_LAYOUT"
   cp $INSTALLER_CFG $CUSTOM_ISO_LAYOUT/etc/
-  
+
   echo "==> Enable serial and internal consoles"
   echo "-Dhv" > $CUSTOM_ISO_LAYOUT/boot.config
   echo "cuau0   \"/usr/libexec/getty std.38400\"  xterm   on  secure" >> $CUSTOM_ISO_LAYOUT/etc/ttys
-  
+
   echo "==> Setting autoboot delay to 5 seconds"
   echo "autoboot_delay=\"5\"" >> $CUSTOM_ISO_LAYOUT/boot/loader.conf
-  
+
   echo "==> Get network up automatically in the blank VM"
   echo "ifconfig_vtnet0=\"DHCP\"" >> $CUSTOM_ISO_LAYOUT/etc/rc.conf
   echo "ifconfig_vtnet1=\"DHCP\"" >> $CUSTOM_ISO_LAYOUT/etc/rc.conf
-  
+
   echo "==> Remove resolv.conf symlink"
   rm $CUSTOM_ISO_LAYOUT/etc/resolv.conf
 
   echo "==> Set resolvers in the blank VM"
   echo "nameserver 8.8.8.8" >> $CUSTOM_ISO_LAYOUT/etc/resolv.conf
   echo "nameserver 8.8.4.4" >> $CUSTOM_ISO_LAYOUT/etc/resolv.conf
-  
+
   echo "==> Unmounting $ISO_MOUNT"
   umount $ISO_MOUNT
 }
@@ -124,7 +122,7 @@ function create_newiso() {
   echo "==> Getting Volume ID for ${ISO}"
   CUSTOM_ISO_TITLE=$(isoinfo -d -i ${ISO_DIR}/${ISO} | grep "Volume id" | awk '{print $3}')
   echo "==> Volume ID is $CUSTOM_ISO_TITLE"
-  
+
   echo "==> Preparing NEW ISO"
   mkisofs -J -R -no-emul-boot \
     -V "$CUSTOM_ISO_TITLE" \
