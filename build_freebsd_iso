@@ -31,7 +31,7 @@ function fetch_iso() {
   fi
 
   echo "==> Fetching ${SHA256SUM}"
-  curl -o ${ISO_DIR}/${SHA256SUM} ftp://${MIRROR}/${MIRROR_PATH}/${RELEASE}/${SHA256SUM}
+  curl -sS -o ${ISO_DIR}/${SHA256SUM} ftp://${MIRROR}/${MIRROR_PATH}/${RELEASE}/${SHA256SUM}
 
   echo "==> Checking for local copy of $ISO..."
   if [[ -e $ISO_DIR/$ISO ]]; then
@@ -40,7 +40,7 @@ function fetch_iso() {
   else
       echo "==> Local copy not found."
       echo "==> Fetching ISO from $MIRROR..."
-      curl -o ${ISO_DIR}/${ISO} ftp://${MIRROR}/${MIRROR_PATH}/${RELEASE}/${ISO}
+      curl -sS -o ${ISO_DIR}/${ISO} ftp://${MIRROR}/${MIRROR_PATH}/${RELEASE}/${ISO}
       echo "==> Done!"
       echo "==> ${ISO} saved to $ISO_DIR/"
 
